@@ -1,0 +1,29 @@
+# --------------------------------------
+# Rails-specific rules (GitHub Linguist)
+# --------------------------------------
+# Database schema is machine-generated
+db/schema.rb            linguist-generated
+
+# Anything in vendor/ is third-party code
+vendor/*                linguist-vendored
+
+# Let Git treat encrypted credentials as text so we can diff them
+config/credentials/*.yml.enc diff=rails_credentials
+config/credentials.yml.enc   diff=rails_credentials
+
+# --------------------------------------
+# Exclude from `git archive` (Railway build)
+# --------------------------------------
+# CI & infra folders we don’t need in the final image
+.github/                export-ignore
+.kamal/                 export-ignore
+
+# --------------------------------------
+# Normalise line endings for plain text
+# --------------------------------------
+*.rb                    text eol=lf
+*.yml                   text eol=lf
+*.yaml                  text eol=lf
+*.json                  text eol=lf
+*.md                    text eol=lf
+*.sh                    text eol=lf

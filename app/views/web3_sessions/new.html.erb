@@ -1,0 +1,35 @@
+<h1>Login or Register with MetaMask</h1>
+
+<div id="metamask-login">
+  <button id="connect-metamask">Connect MetaMask</button>
+  <form id="web3-login-form" action="<%= web3_sessions_path %>" method="post" style="display:none;">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="address" id="wallet-address">
+    <input type="hidden" name="signature" id="wallet-signature">
+    <input type="hidden" name="message" id="wallet-message">
+  </form>
+</div>
+
+<script>
+const connectBtn = document.getElementById('connect-metamask');
+const loginForm = document.getElementById('web3-login-form');
+
+connectBtn.onclick = async function() {
+  if (!window.ethereum) {
+    alert('MetaMask is required.');
+    return;
+  }
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  const address = accounts[0];
+  const message = 'Login to Zero-to-Hero Money-Making Hub at ' + new Date().toISOString();
+  const signature = await window.ethereum.request({
+    method: 'personal_sign',
+    params: [message, address],
+  });
+  document.getElementById('wallet-address').value = address;
+  document.getElementById('wallet-signature').value = signature;
+  document.getElementById('wallet-message').value = message;
+  loginForm.style.display = 'block';
+  loginForm.submit();
+};
+</script>

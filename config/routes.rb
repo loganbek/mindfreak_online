@@ -11,4 +11,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  resource :web3_sessions, only: [:new, :create, :destroy]
 end

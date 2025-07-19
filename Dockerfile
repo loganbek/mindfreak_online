@@ -46,14 +46,14 @@ COPY . .
 # Make sure bin scripts are executable
 RUN chmod +x ./bin/*
 
+# Precompile assets for production, requires RAILS_MASTER_KEY to be set
+RUN SECRET_KEY_BASE=$(bundle exec rake secret) ./bin/rails assets:precompile
+
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
-
-
 
 # Final stage for app image
 FROM base

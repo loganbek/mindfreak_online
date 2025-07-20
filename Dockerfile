@@ -3,7 +3,9 @@
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
 # docker build --build-arg RAILS_MASTER_KEY=$(cat config/master.key) -t mindfreak_online .
-# docker run -d -p 80:80 -e RAILS_MASTER_KEY=$(cat config/master.key) --name mindfreak_online mindfreak_online
+# For production, generate a permanent secret with `bin/rails secret` and store it securely.
+# For local testing, you can run:
+# docker run -d -p 80:80 -e RAILS_MASTER_KEY=$(cat config/master.key) -e SECRET_KEY_BASE=$(bin/rails secret) --name mindfreak_online mindfreak_online
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 

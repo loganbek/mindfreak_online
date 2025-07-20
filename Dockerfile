@@ -48,7 +48,7 @@ COPY . .
 RUN chmod +x ./bin/*
 
 # Precompile assets using credentials
-RUN RAILS_MASTER_KEY=${RAILS_MASTER_KEY} ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE=$(bin/rails secret) RAILS_MASTER_KEY=${RAILS_MASTER_KEY} ./bin/rails assets:precompile
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
